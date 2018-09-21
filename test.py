@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-This file is a basic test of the Spyder Python Development Environment.
+This file is for testing out the Spyder Python Development Environment.
 
 Created on Sat Sep 15 23:10:59 2018
 
