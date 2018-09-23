@@ -47,7 +47,7 @@ class Item:
 class Knapsack:    
     def __init__(self, mw, metric, available):
         self.maxWeight = mw # maximum weight that the knapsack can carry
-        self.availableItems = sorted(available, key = metric, reverse = True) # list of all available Item objects sorted from best to worst
+        self.availableItems = sorted(available, key = metric, reverse = True) # sorted list of all available Item objects
         self.takenItems = [] # list to indicate whether each item is taken
         self.metric = metric # metric used to determine next most valuable item
         for i in range(0, len(self.availableItems)):
