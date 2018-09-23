@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-This file contains two classes: Item and Knapsack and uses a greedy algorithm to approximate an optimal solution for which Items to place in the knapsack.
-Code inspired by Lecture 1 of MIT Course 6.00.2x: Introduction to Computational Thinking and Data Science
+This file contains two classes, Item and Knapsack, and uses a greedy algorithm to approximate an optimal solution for which
+Items to place in the knapsack.
+Code inspired by Lecture 1 of MIT Course 6.00.2x: Introduction to Computational Thinking and Data Science.
 
 Created on Thu Sep 20 13:23:00 2018
 
