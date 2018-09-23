@@ -13,7 +13,8 @@ Created on Sun Sep 23 14:36:00 2018
 """
 PROBLEM #1
 Answer: n
-Explanation: The function takes in a list of n elements and then loops through each element in that list once, meaning the for loop will iterate n times. 
+Explanation: The function takes in a list of n elements and then loops through each element in that list once, meaning the 
+for loop will iterate n times. 
 
 """
 NUMBER = 3
@@ -29,7 +30,8 @@ def look_for_things(myList):
 """
 PROBLEM #2
 Answer: n^2
-Explanation: The function takes in a list of n elements. The outer loop iterates n times and the inner loop also iterates n times because both loops iterate through myList once. This means we have a big-O runtime of n*n. 
+Explanation: The function takes in a list of n elements. The outer loop iterates n times and the inner loop also iterates 
+n times because both loops iterate through myList once. This means we have a big-O runtime of n*n. 
 
 """
 NUMBER = 3
@@ -46,7 +48,9 @@ def look_for_other_things(myList):
 """
 PROBLEM #3
 Answer: 2^n
-Explanation: We are asked to ignore the run time of get_all_subsets. A list of n elements has 2^n subsets (including the set and the empty set). So, the second function loops through the list of subsets once which means the for loop will iterate 2^n times. 
+Explanation: We are asked to ignore the run time of get_all_subsets. A list of n elements has 2^n subsets (including the 
+set and the empty set). So, the second function loops through the list of subsets once which means the for loop will 
+iterate 2^n times. 
 
 """
 def get_all_subsets(some_list):
