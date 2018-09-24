@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-This file contains two classes, Item and Knapsack, and uses a greedy algorithm to approximate an optimal solution for which
+This file contains two classes: Item and Knapsack and uses a greedy algorithm to approximate an optimal solution for which 
 Items to place in the knapsack.
-Code inspired by Lecture 1 of MIT Course 6.00.2x: Introduction to Computational Thinking and Data Science.
+Code inspired by Lecture 1 of MIT Course 6.00.2x: Introduction to Computational Thinking and Data Science
 
 Created on Thu Sep 20 13:23:00 2018
 
@@ -48,10 +48,12 @@ class Knapsack:
     def __init__(self, mw, metric, available):
         self.maxWeight = mw # maximum weight that the knapsack can carry
         self.availableItems = sorted(available, key = metric, reverse = True) # sorted list of all available Item objects
-        self.takenItems = [] # list to indicate whether each item is taken
         self.metric = metric # metric used to determine next most valuable item
+        self.takenItems = []
         for i in range(0, len(self.availableItems)):
             self.takenItems.append(0)
+            
+            
             
         self.totalWeight = 0
         self.totalValue = 0
@@ -64,7 +66,7 @@ class Knapsack:
                 self.takenItems[i] = 1
                 self.totalWeight += self.availableItems[i].getWeight()
                 self.totalValue += self.availableItems[i].getValue()
-                #print(self.availableItems[i].toString())
+                
     
     def toString(self):
         string = "Total Value: " + str(self.totalValue) + ", Total Weight: " + str(self.totalWeight) + "\n"
