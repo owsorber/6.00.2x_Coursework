@@ -35,9 +35,7 @@ This is equivalent to dividing x by 2^y.
 LEFT SHIFT Operator: <<
 Each bit in x will be shifted to the left y spaces, and a y number of 0s will show up at the end of the binary expression.
 This is equivalent to multiplying x by 2^y.
-
 """
-
 x = 240     # 11110000
 y = 2
 rs = x >> y # 00111100
