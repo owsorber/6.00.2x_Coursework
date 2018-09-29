@@ -7,7 +7,7 @@ Code inspired by Lecture 2 of MIT Course 6.00.2x: Introduction to Computational 
 
 Created on Fri Sep 28 07:45:50 2018
 
-@author: owsorber1
+@author: owsorber
 """
 
 class Item:
