@@ -1,14 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-This file contains two classes, Item and Knapsack, and uses a decision tree recursive algorithm to find an optimal solution for which 
-Items to place in the knapsack.
+This file contains two classes, Item and Knapsack, and uses a decision tree recursive algorithm to find an optimal solution 
+for which Items to place in the knapsack. The Knapsack class holds two main algorithms, findOptimal and fastFindOptimal.
+The findOptimal method is a brute force algorithm which recursively continues viewing the effect of each possible decision.
+The fastFindOptimal method uses memoization to store the return class of previous calls of itself; when it comes across a 
+similar decision (i.e. same number of items left and same available weight) it finds the decision in memo rather than 
+having to decide again.
+The findOptimal method is exponential in runtime whereas the fastFindOptimal method is significantly faster.
 Code inspired by Lecture 2 of MIT Course 6.00.2x: Introduction to Computational Thinking and Data Science
 
 Created on Fri Sep 28 07:45:50 2018
 
 @author: owsorber
 """
+
+import random
 
 class Item:
     __name = ""
@@ -80,10 +87,48 @@ class Knapsack:
         
         return result
     
+    def fastFindOptimal(self, toConsider, availableWeight, memo = {}):
+        # The key of memo is a tuple --> (# of items left, avail weight)
+        if (len(toConsider), availableWeight) in memo:
+            """ This is where the memoization happens.
+            If we have already tested a node with the same # of items left to be considered and available weight, 
+            return that optimal solution.
+            Note: we check this condition first for efficiency since it will occur the most amount of times.
+            """
+            result = memo[len(toConsider), availableWeight]
+            
+        elif toConsider == [] or availableWeight == 0:
+            result = (0, ())
+            
+        elif toConsider[0].getWeight() > availableWeight:
+            result = self.fastFindOptimal(toConsider[1:], availableWeight, memo)
+            
+        else:
+            currentItem = toConsider[0]
+            
+            # Explore left branch
+            # valueWithItem is total value if item is chosen, withToTake is optimal items chosen if this item is
+            valueWithItem, withToTake = self.fastFindOptimal(toConsider[1:], availableWeight - currentItem.getWeight(), memo)
+            valueWithItem += currentItem.getValue()
+                
+            #Explore right branch
+            # valueWithItem is total value if item isn't chosen, withoutToTake is optimal items chosen if this item isn't
+            valueWithoutItem, withoutToTake = self.fastFindOptimal(toConsider[1:], availableWeight, memo)
+                
+            #Choose better branch
+            if valueWithItem > valueWithoutItem:
+                result = (valueWithItem, withToTake + (currentItem,))
+            else:
+                result = (valueWithoutItem, withoutToTake)
+            
+            memo[len(toConsider), availableWeight] = result # Update the memo
+                
+        return result
+    
     
     # Convert the tuple returned from the findOptimal method into a string
     def toString(self):
-        optimalSolution = self.findOptimal(self.availableItems, self.maxWeight)
+        optimalSolution = self.fastFindOptimal(self.availableItems, self.maxWeight)
         string = "Total Value: " + str(optimalSolution[0]) + "\n"
         string += "Items Taken:\n"
         for i in optimalSolution[1]:
@@ -102,5 +147,12 @@ items = [
         Item("Donut", 56, 195)
 ]
 
-knapsack = Knapsack(1000, items)
+# Test the fastFindOptimal method by generating 100 items randomly.
+# It solves this problem way faster than it would have had we used the exponential findOptimal algorithm.
+randItems = []
+for i in range(0, 100):
+    randItems.append(Item(str(i), random.randint(0, 100), random.randint(100, 300)))
+
+knapsack = Knapsack(1000, randItems)
 print(knapsack.toString())
+
