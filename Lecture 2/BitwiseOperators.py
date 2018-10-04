@@ -23,7 +23,7 @@ Otherwise, the corresponding output bit is 0.
 a = 50    # 1100101
 b = 25    # 0101001
 
-c = a & b # 0100000
+c = a & b # 0100001
 d = a | b # 1101101
 
 
