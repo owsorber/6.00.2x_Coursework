@@ -19,7 +19,7 @@ Takes in:
 Returns an int that represents the number of ways one can go up the staircase of N steps.
 
 What's really cool about this is it ends up generating a fibonacci sequence with starting terms option1, option2.
-If option1 and option2 are the tuple (1, 2) then numWays(N, options) will be the Nth term in the Fibonacci sequence.
+If option1 and option2 are the tuple (1, 2) then numWays(N, options) will be the (N - 1)th term in the Fibonacci sequence.
 """
 def numWays(N, options):
     if N <= 0:
