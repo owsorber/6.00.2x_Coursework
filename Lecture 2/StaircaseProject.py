@@ -51,6 +51,6 @@ def fastNumWays(N, options, memo = {}):
 
 
 testedN = 60
-ways = fastNumWays(testedN, (1, 4))
+ways = fastNumWays(testedN, (1, 2))
 
 print("For %s stairs, there are %s ways." % (testedN, ways))
