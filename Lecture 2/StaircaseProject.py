@@ -4,7 +4,9 @@
 This file contains the code for my Lecture 2 Project. For my Lecture 2 Project, I decided to solve the Recursive Staircase
 Problem. Assume you're given a staircase of N steps. There are only two means by which you can go up the staircase.
 Given you can either go "a" steps at a time or "b" steps at a time, how many ways are there to get up the staircase?
-TODO: enable the algorithm to also return each distinct way to get up the staircase.
+TODO: 
+    * Enable the algorithm to also return each distinct way to get up the staircase
+    * Enable the algorithm to take in a tuple with more than two options
 
 Created on Tue Oct 09 22:54:07 2018
 
@@ -51,6 +53,6 @@ def fastNumWays(N, options, memo = {}):
 
 
 testedN = 60
-ways = fastNumWays(testedN, (1, 2))
+ways = fastNumWays(testedN, (3, 4))
 
 print("For %s stairs, there are %s ways." % (testedN, ways))
