@@ -1,1 +1,15 @@
-Notes on Graph Theory
+This file contains my own personal notes about segment 1 of Lecture 3, "Graphs".
+
+A Graph is a set of Nodes.
+  * Node (vertex): has properties associated with it (ex: a node that represents a city may have demographics as properties)
+  * Edge (arc): connects a pair of nodes
+      * Can be unweighted or weighted
+  * Undirected Graph (graph): connection between nodes is symmetric (ex: Facebook friends)
+  * Directed Graph (digraph): connection is asymmetric, goes from one node to the other (ex: search trees)
+
+Google Maps Example:
+  * Digraph
+  * Nodes are points where roads meet/end (ex: intersections)
+  * Edges are connections between these points
+      * Edges are weighted by the time it takes to get between source node and destination node
+  * Solves for shortest weighted path between two locations
