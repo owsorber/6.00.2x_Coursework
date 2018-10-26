@@ -92,7 +92,7 @@ class Graph(Digraph): # Graph inherits digraph and overrides addEdge method
         Digraph.addEdge(self, reverseEdge)
 
 
-""" Example of Digraph using cities (image of cities is in Lecture 3 folder: Airline_Connections_Digraph_Image.png """
+""" Example of Digraph using cities """
 
 # Create list of names that correspond to each of the 7 nodes
 cityNames = ["Boston", "Providence", "New York", "Chicago", "Denver", "Phoenix", "Los Angeles"]
