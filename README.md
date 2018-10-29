@@ -7,5 +7,5 @@ This repository includes problem sets, assigments, projects, and other miscellan
 Repositories that include lesson code, assignments/exercises, and lecture-specific projects are placed into different folders based on Lecture. Problem Sets can all be found in the same Problem Set folder and are organized by Unit.
 
 ## Personal Projects For Each Lecture
-* Lecture 2: Staircase of N-Steps
+* Lecture 2: Staircase of N Steps
 * Lecture 3: Maze Solver
