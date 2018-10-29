@@ -7,10 +7,10 @@ Since I didn't know of a way to convert a maze image into a graph, I decided to 
 each row of the maze I'm using for testing. Since the maze I'm using is 10 x 10, there are 10 strings of 10 characters.
 Each character represents a location along the maze and the possibilities of movements from that location.
 Using this array, I built a graph of 100 nodes that are connected if one can move from one to the other in one move
-in the maze. Then, I print out the optimal solution to the maze to the screen.
+in the maze. Then, I print out the optimal path of nodes in the maze to the screen.
 
 Work in Progress, TODO: 
-    * Output optimization data to the user
+    * Tell user actual steps (e.g. right, right, down, etc.) rather than node numbers
     * Allow importing of maze images?
 
 Created on Sat Oct 27 22:37:18 2018
@@ -114,23 +114,34 @@ class Maze:
     
     # Breadth-first search through maze
     def searchForPath(self):
-        pathQueue = [self.start]
-        while len(pathQueue != 0):
-            tempPath = pathQueue.pop(0)
-            lastNode = tempPath[-1]
-            if lastNode == self.end:
+        initPath = [self.getNode(self.start)]
+        pathQueue = [initPath] # list of paths we explore, all leaving the first node
+        while len(pathQueue) != 0:
+            tempPath = pathQueue.pop(0) # get the next path to explore and store in tempPath
+            lastNode = tempPath[-1] # get the last node of the path we're currently exploring
+            if lastNode == self.getNode(self.end):
                 return tempPath
-            for node in self.childrenOf(lastNode):
-                newPath = tempPath + [node]
-                pathQueue.append(newPath)
+            for nextNode in self.childrenOf(lastNode):
+                if nextNode not in tempPath:
+                    newPath = tempPath + [nextNode]
+                    # add the new path to the queue (note: it was taken out as tempPath earlier in the while loop)
+                    pathQueue.append(newPath) 
+        return None
     
     def __str__(self):
-        result = ""
+        optimalPath = self.searchForPath()
+        result = "The optimal path for this maze is:\n"
+        for node in optimalPath:
+            result += "Node # " + node.__str__() + "\n"
+            
+        return result
+        
+        """result = ""
         for src in self.edges:
             for dest in self.edges[src]:
                 result += src.__str__() + " -> " + dest.__str__() + "\n"
         
-        return result
+        return result"""
     
 maze = Maze(4, 95)
 
