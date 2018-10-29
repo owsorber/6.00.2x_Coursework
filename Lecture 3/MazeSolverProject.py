@@ -10,7 +10,7 @@ Using this array, I built a graph of 100 nodes that are connected if one can mov
 in the maze. Then, I print out the optimal path of nodes in the maze to the screen.
 
 Work in Progress, TODO: 
-    * Allow importing of maze images?
+    * Somehow enable computer to decode mazes and create graph from maze image?
 
 Created on Sat Oct 27 22:37:18 2018
 
