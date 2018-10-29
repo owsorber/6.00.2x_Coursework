@@ -5,8 +5,9 @@ This file contains two search methods that build upon the Graph Theory used in p
 path between a starting node and an ending node. One method employs a depth-first search, which means it looks at the
 first child of the starting node and then recursively keeps looking for a path consisting of that first child. If
 no path is found, the method backtracks and looks at the second child, and so on. The other method employs a
-breadth-first search which starts at the starting node and puts each child in the path queue to explore them next
-and keeps moving down along the reachable nodes until one finds the solution. The first found solution will be the shortest.
+breadth-first search which starts at the starting node and keeps track of multiple different paths, one for each child.
+The method keeps moving down along the reachable nodes until one finds the solution.
+The first found solution will be the shortest.
 Created on Wed Oct 17 07:47:10 2018
 
 @author: owsorber
@@ -109,15 +110,18 @@ def depthFirstSearch(graph, start, end, path, shortest):
     
 
 def breadthFirstSearch(graph, start, end):
-    pathQueue = [start]
+    initPath = [start]
+    pathQueue = [initPath] # list of paths we explore, all leaving the first node
     while len(pathQueue != 0):
-        tempPath = pathQueue.pop(0) # take out next in queue and store it in tempPath
-        lastNode = tempPath[-1] # last element of tempPath list
+        tempPath = pathQueue.pop(0) # get the next path to explore and store in tempPath
+        lastNode = tempPath[-1] # get the last node of the path we're currently exploring
         if lastNode == end:
             return tempPath
         for nextNode in graph.childrenOf(lastNode):
-            newPath = tempPath + [nextNode]
-            pathQueue.append(newPath)
+            if nextNode not in tempPath:
+                newPath = tempPath + [nextNode]
+                # add the new path to the queue (note: it was taken out as tempPath earlier in the while loop)
+                pathQueue.append(newPath)
             
     return None
             
@@ -125,7 +129,4 @@ def breadthFirstSearch(graph, start, end):
 
 def shortestPath(graph, start, end):
     return depthFirstSearch(graph, start, end, [], None)
-    
-    
-    
-    
+
