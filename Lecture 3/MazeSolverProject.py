@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This file contains the code for my Lecture 3 Project. For my Lecture 3 Project, I decided to create a Maze Solver that uses
-Graph Theory and Breadth-First Recursive Searching to find the optimal route to complete the maze.
+Graph Theory and Breadth-First Searching to find the optimal route to complete the maze.
 Since I didn't know of a way to convert a maze image into a graph, I decided to create a maze array that stores a string for
 each row of the maze I'm using for testing. Since the maze I'm using is 10 x 10, there are 10 strings of 10 characters.
 Each character represents a location along the maze and the possibilities of movements from that location.
