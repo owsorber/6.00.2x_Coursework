@@ -3,7 +3,7 @@
 
 Problem 1: 20/20 points
 Problem 2: 20/20 points
-Problem 3: todo
+Problem 3: 6/6 points
 
 @author: owsorber
 """
@@ -156,7 +156,7 @@ def brute_force_cow_transport(cows,limit):
 
         
 # Problem 3
-def compare_cow_transport_algorithms():
+def compare_cow_transport_algorithms(cows, limit):
     """
     Using the data from ps1_cow_data.txt and the specified weight limit, run your
     greedy_cow_transport and brute_force_cow_transport functions here. Use the
@@ -169,10 +169,30 @@ def compare_cow_transport_algorithms():
     Returns:
     Does not return anything.
     """
-    # TODO: Your code here
-    pass
+    
+    startGreedy = time.time()
+    print(greedy_cow_transport(cows, limit))
+    stopGreedy = time.time()
+    print("The greedy algorithm took %s seconds." % (stopGreedy - startGreedy))
+    
+    startBruteForce = time.time()
+    print(brute_force_cow_transport(cows, limit))
+    stopBruteForce = time.time()
+    print("The brute force algorithm took %s seconds." % (stopBruteForce - startBruteForce))
 
 
+"""
+REFLECTION QUESTIONS:
+    Now that you have run your benchmarks, which algorithm runs faster?
+     * The Greedy Transport Algorithm
+     
+    Consider the properties of the GREEDY algorithm. Will it return the optimal solution?
+     * It could, but it depends on the data; not always
+     
+    Consider the properties of the BRUTE FORCE algorithm. Will it return the optimal solution?
+     * Yes, all the time
+    
+"""
 
 
 """
@@ -185,6 +205,6 @@ cows = load_cows("Cow-Data.txt")
 limit = 10
 print(cows)
 
-print(greedy_cow_transport(cows, limit))  
-print(brute_force_cow_transport(cows, limit))
-
+#print(greedy_cow_transport(cows, limit))  
+#print(brute_force_cow_transport(cows, limit))
+compare_cow_transport_algorithms(cows, limit)
