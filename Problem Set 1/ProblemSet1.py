@@ -2,7 +2,7 @@
 6.00.2x Problem Set 1: Space Cows 
 
 Problem 1: 20/20 points
-Problem 2: todo
+Problem 2: 20/20 points
 Problem 3: todo
 
 @author: owsorber
@@ -93,7 +93,7 @@ def greedy_cow_transport(cows,limit):
 
 
 # Problem 2
-def brute_force_cow_transport(cows,limit=10):
+def brute_force_cow_transport(cows,limit):
     """
     Finds the allocation of cows that minimizes the number of spaceship trips
     via brute force.  The brute force algorithm should follow the following method:
@@ -113,8 +113,46 @@ def brute_force_cow_transport(cows,limit=10):
     transported on a particular trip and the overall list containing all the
     trips
     """
-    # TODO: Your code here
-    pass
+    
+    # Add cows into new list
+    cowsList = []
+    for cow in cows:
+        cowsList.append(cow)
+    
+    # Set up partitions list
+    partitions = []
+    for partition in get_partitions(cowsList):
+        partitions.append(partition)
+    
+    # Delete partitions that have any trips that don't follow weight limit
+    p = 0
+    while p < len(partitions):
+        validTrips = 0
+        for trip in partitions[p]:
+            tripWeight = 0
+            for cow in trip:
+                tripWeight += cows[cow]
+            if tripWeight <= limit:
+                validTrips += 1
+        
+        if validTrips < len(partitions[p]): # if there are less valid trips than total trips
+            partitions.pop(p)
+        else:
+            p += 1
+    
+    
+    # Variables for current best partition
+    currMinTrips = len(partitions[0])
+    bestPartition = partitions[0]
+    
+    # Loop through valid partitions and find one with fewest trips
+    for partition in partitions:
+        if len(partition) < currMinTrips:
+            currMinTrips = len(partition)
+            bestPartition = partition
+    
+    return bestPartition # return best partition
+            
 
         
 # Problem 3
@@ -147,7 +185,6 @@ cows = load_cows("Cow-Data.txt")
 limit = 10
 print(cows)
 
-print(greedy_cow_transport(cows, limit))
+print(greedy_cow_transport(cows, limit))  
 print(brute_force_cow_transport(cows, limit))
-
 
