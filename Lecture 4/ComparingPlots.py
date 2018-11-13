@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-This file follows Lecture 4 Segment 4, which explores ways to compare plots with the pylab library. The 
+This file follows Lecture 4 Segments 4-5, which explore ways to compare plots with the pylab library. The 
 following code creates two plots. One compares a linear and quadratic function, and the other compares a
 cubic and exponential function. Both plots also employ the pylab function legend(), which allows us to 
 visualize which curve relates to which dataset.
