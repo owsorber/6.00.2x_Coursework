@@ -19,3 +19,6 @@ Static Model:
 
 Dynamic Model:
  * Highlights the evolution of the process itself, describing movement from state to state
+
+
+
