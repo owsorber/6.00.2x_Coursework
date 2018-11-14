@@ -1,0 +1,21 @@
+Models: Deterministic vs. Stochastic, Continuous vs. Discrete, Static vs. Dynamic
+
+Deterministic Model:
+ * Philosophy: all future states of a physical system can be derived from knowledge about current state
+ * Given a fixed set of inputs, the model always gives the same output
+ 
+Stochastic Model:
+ * Philosophy: the future state of a system could depend on both the previous states and some random element
+ * Regardless of identical inputs, the model's output can vary from instance to instance
+ 
+Discrete Model:
+ * The variables in the model are characterized by jumps and distinct values
+
+Continuous Model:
+ * The variables in the model hold an infinite number of potential values in any fixed interval
+ 
+Static Model:
+ * Captures a single moment in time along some process
+
+Dynamic Model:
+ * Highlights the evolution of the process itself, describing movement from state to state
