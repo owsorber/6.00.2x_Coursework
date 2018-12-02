@@ -9,3 +9,4 @@ Repositories that include lesson code, assignments/exercises, and lecture-specif
 ## Personal Projects For Each Lecture
 * Lecture 2: Staircase of N Steps
 * Lecture 3: Maze Solver
+* Lecture 4: Fibonacci Algorithm Runtime Plot
