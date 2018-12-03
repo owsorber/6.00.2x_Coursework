@@ -155,10 +155,16 @@ drunkClasses =  {
     LeftRightDrunk : "Left Right Drunk"
 }
 
+
+walkLengths = [100, 500, 1000]
+
 # Loop through all of our drunk classes and run a random walk
 for drunkClass in drunkClasses:
     print(str(drunkClasses[drunkClass]))
-    randomWalk(1000, 100, drunkClass)
+    for length in walkLengths:
+        print("Random walk of %s steps" % length)
+        randomWalk(length, 100, drunkClass)
+        print()
     print()
     
 
