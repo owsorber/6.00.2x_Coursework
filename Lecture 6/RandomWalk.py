@@ -59,6 +59,11 @@ class WinterHatingDrunk(Drunk):
         stepChoices = [(1, 0), (-1, 0), (0, 0.8), (0, -1.2)]
         return random.choice(stepChoices)
 
+class LeftRightDrunk(Drunk):
+    def takeStep(self):
+        stepChoices = [(1, 0), (-1, 0)]
+        return random.choice(stepChoices)
+
 class Field:
     def __init__(self):
         self.drunks = {}
@@ -143,10 +148,18 @@ def randomWalk(numSteps, numDrunks, drunkClass):
     print("Average Position %s" % str(field.averagePosition(numDrunks)))
 
 
-print("Normal Drunks")
-randomWalk(1000, 100, NormalDrunk)
+# Dictionary of all subclasses of drunk mapped to a string identifier
+drunkClasses =  {
+    NormalDrunk : "Nornal Drunk",
+    WinterHatingDrunk : "Winter Hating Drunk",
+    LeftRightDrunk : "Left Right Drunk"
+}
 
-print("\nWinter Hating Drunks")
-randomWalk(1000, 100, WinterHatingDrunk)
+# Loop through all of our drunk classes and run a random walk
+for drunkClass in drunkClasses:
+    print(str(drunkClasses[drunkClass]))
+    randomWalk(1000, 100, drunkClass)
+    print()
+    
 
 
