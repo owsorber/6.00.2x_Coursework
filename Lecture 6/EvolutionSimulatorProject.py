@@ -208,9 +208,9 @@ class Generation:
         
         return output
         
-
+""" PRINT DATA FROM SIMULATION - THIS COULD BE TURNED INTO ITS OWN CLASS """
     
-generations = []
+generations = [] # List that stores every generation simulated
 
 for i in range(0, NUMBER_GENERATIONS):
     genNum = i + 1
