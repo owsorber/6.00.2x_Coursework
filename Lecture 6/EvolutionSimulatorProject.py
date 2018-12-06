@@ -59,15 +59,18 @@ DESIRED_POSITION = Vector(1000, 1000)
 NUM_STEPS = 100 # Number of steps an organism takes throughout random walk
 
 START_TRAIT_RANGE = (-1, 1) # Range of potential start traits, which are generated randomly
-SURVIVAL_RATE = 0.01 # Rate of survival
+SURVIVAL_RATE = 0.5 # Rate of survival
 MUTATION_CONSTANT = 0.2 # Range of potential mutation
 
 ORGANISMS_PER_GENERATION = 100 # Organisms per generation (runtime decreases as # increases)
 NUMBER_TRAITS = 1 # Number of traits to dictate organism movement
 
-NUMBER_GENERATIONS = 1000 # Number of generations to simulate
-PLOT_FREQUENCY = 200 # Generate a plot for every nth generation
-DATA_FREQUENCY = 200 # Show data for every nth generation
+NUMBER_GENERATIONS = 100 # Number of generations to simulate
+PLOT_FREQUENCY = 20 # Generate a plot for every nth generation
+DATA_FREQUENCY = 20 # Show data for every nth generation
+PLOT_X_RANGE = (-100, 1200)
+PLOT_Y_RANGE = (-100, 1200)
+USE_PLOT_RANGE = True
 
 
 class Organism:
@@ -151,8 +154,9 @@ class Generation:
         plt.title("Final Positions for Generation # " + str(self.num))
         plt.xlabel("X")
         plt.ylabel("Y")
-        #plt.xlim(-100, 1200)
-        #plt.ylim(-100, 1200)
+        if (USE_PLOT_RANGE):
+            plt.xlim(PLOT_X_RANGE[0], PLOT_X_RANGE[1])
+            plt.ylim(PLOT_Y_RANGE[0], PLOT_Y_RANGE[1])
         plt.plot(xVals, yVals, "r^")
         plt.plot(desiredX, desiredY, "bo")
     
