@@ -18,6 +18,7 @@ Created on Sun Dec 2 16:01:09 2018
 
 import random
 import math
+import pylab as plt
 
 
 class Position:
@@ -146,6 +147,20 @@ def randomWalk(numSteps, numDrunks, drunkClass):
     print("Min Distance: %s" % str(field.minDistance()))
     print("Max Distance: %s" % str(field.maxDistance()))
     print("Average Position %s" % str(field.averagePosition(numDrunks)))
+    
+    xVals = []
+    yVals = []
+        
+    for drunk in field.drunks:
+        xVals.append(field.getPosition(drunk).getX())
+        yVals.append(field.getPosition(drunk).getY())
+        
+        plt.figure("random walk " + str(drunkClass))
+        plt.clf()
+        plt.title("Final Positions of Random Walk: " + str(drunkClass))
+        plt.xlabel("X")
+        plt.ylabel("Y")
+        plt.plot(xVals, yVals, "r^")
 
 
 # Dictionary of all subclasses of drunk mapped to a string identifier
@@ -156,7 +171,7 @@ drunkClasses =  {
 }
 
 
-walkLengths = [100, 500, 1000]
+walkLengths = [100, 500]
 
 # Loop through all of our drunk classes and run a random walk
 for drunkClass in drunkClasses:
