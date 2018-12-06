@@ -63,7 +63,7 @@ SURVIVAL_RATE = 0.5 # Rate of survival
 MUTATION_CONSTANT = 0.2 # Range of potential mutation
 
 ORGANISMS_PER_GENERATION = 100 # Organisms per generation (runtime decreases as # increases)
-NUMBER_TRAITS = 1 # Number of traits to dictate organism movement
+NUMBER_TRAITS = 4 # Number of traits to dictate organism movement
 
 NUMBER_GENERATIONS = 100 # Number of generations to simulate
 PLOT_FREQUENCY = 20 # Generate a plot for every nth generation
