@@ -2,7 +2,7 @@
 6.00.2x Problem Set 1: Simulating Robots 
 Problem 1: 10/10 points
 Problem 2: 10/10 points
-Problem 3:
+Problem 3: 10/10 points
 Problem 4:
 Problem 5:
 Problem 6:
@@ -280,11 +280,19 @@ class StandardRobot(Robot):
         Move the robot to a new position and mark the tile it is on as having
         been cleaned.
         """
-        raise NotImplementedError
+        
+        newPos = self.pos.getNewPosition(self.angle, self.speed)
+        
+        # if new position is achievable, go to it; else, change direction
+        if self.room.isPositionInRoom(newPos):
+            self.setRobotPosition(newPos)
+            self.room.cleanTileAtPosition(self.pos)
+        else:
+            self.setRobotDirection(random.random() * 360)
 
 
 # Uncomment this line to see your implementation of StandardRobot in action!
-##testRobotMovement(StandardRobot, RectangularRoom)
+testRobotMovement(StandardRobot, RectangularRoom)
 
 
 # === Problem 4
