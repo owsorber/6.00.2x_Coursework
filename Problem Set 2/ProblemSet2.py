@@ -378,8 +378,6 @@ def testRobotMovement(robot_types, room, speed, delay):
         anim.update(room, robots)
     anim.done()
 
-#testRobotMovement([StandardRobot, StandardRobot, StandardRobot, RandomWalkRobot], RectangularRoom(10, 10), 0.2, 0.1)
-
 
 # === Problem 6
 def showPlot1(title, x_label, y_label):
@@ -426,6 +424,39 @@ def showPlot2(title, x_label, y_label):
     pylab.ylabel(y_label)
     pylab.show()
 
+def showPlot3(title, x_label, y_label):
+    """
+    What information does the plot produced by this function tell you?
+    
+    The Time It Takes Robots To Clean Different Percentages of a Room
+    """
+    percentages = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
+    times1 = []
+    times5 = []
+    times10 = []
+    for percentage in percentages:
+        print("Plotting for ", percentage * 100, "% of room")
+        times1.append(runSimulation(1, 1.0, 20, 20, percentage, 20, StandardRobot))
+        times5.append(runSimulation(5, 1.0, 20, 20, percentage, 20, StandardRobot))
+        times10.append(runSimulation(10, 1.0, 20, 20, percentage, 20, StandardRobot))
+    pylab.plot(percentages, times1)
+    pylab.plot(percentages, times5)
+    pylab.plot(percentages, times10)
+    pylab.title(title)
+    pylab.legend(('1 Robot', '5 Robots', '10 Robots'))
+    pylab.xlabel(x_label)
+    pylab.ylabel(y_label)
+    pylab.show()
 
-#showPlot1("Time It Takes 1 - 10 Robots To Clean 80% Of A Room", "Num Robots", "Time")
-#showPlot2("Time It Takes Two Robots To Clean 80% Of Variously Sized Rooms", "Ratio Between Width and Height", "Time")    
+
+""" TESTING PLOTS """
+showPlot1("Time It Takes 1 - 10 Robots To Clean 80% Of A Room", "Num Robots", "Time")
+showPlot2("Time It Takes Two Robots To Clean 80% Of Variously Sized Rooms", "Ratio Between Width and Height", "Time")    
+showPlot3("Time It Takes Robots To Clean Different Percentages of a Room", "Percentage", "Time")
+
+""" TESTING ROBOT MOVEMENT """
+#testRobotMovement([StandardRobot, StandardRobot, StandardRobot, StandardRobot], RectangularRoom(10, 10), 0.2, 0.1)
+
+
+
+
