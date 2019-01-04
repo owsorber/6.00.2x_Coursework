@@ -5,7 +5,7 @@ Problem 2: 10/10 points
 Problem 3: 10/10 points
 Problem 4: 10/10 points
 Problem 5: 10/10 points
-Problem 6:
+Problem 6: 6/6 points
 
 @author: owsorber
 """
@@ -262,16 +262,6 @@ class Robot(object):
         self.room.cleanTileAtPosition(self.pos)
         
         raise NotImplementedError # don't change this!
-        
-    def testRobotMovement(self, delay=0.1):
-        """
-        Runs a simulation of a single robot of type robot_type in a RectangularRoom.
-        """
-        anim = ps2_visualize.RobotVisualization(1, self.room.width, self.room.height, delay)
-        while self.room.getNumCleanedTiles() < self.room.getNumTiles():
-            self.updatePositionAndClean()
-            anim.update(self.room, [self])
-        anim.done()
 
 
 # === Problem 3
@@ -372,10 +362,31 @@ class RandomWalkRobot(Robot):
 #randombot = RandomWalkRobot(RectangularRoom(20, 20), 0.5)
 #randombot.testRobotMovement()
 
+def testRobotMovement(robot_types, room, speed, delay):
+    """
+    Runs a simulation of a single robot of type robot_type in a RectangularRoom.
+    """
+    
+    robots = []
+    for robot_type in robot_types:
+        robots.append(robot_type(room, speed))
+    
+    anim = ps2_visualize.RobotVisualization(len(robots), room.width, room.height, delay)
+    while room.getNumCleanedTiles() < room.getNumTiles():
+        for robot in robots:
+            robot.updatePositionAndClean()
+        anim.update(room, robots)
+    anim.done()
 
+#testRobotMovement([StandardRobot, StandardRobot, StandardRobot, RandomWalkRobot], RectangularRoom(10, 10), 0.2, 0.1)
+
+
+# === Problem 6
 def showPlot1(title, x_label, y_label):
     """
     What information does the plot produced by this function tell you?
+    
+    The Time It Takes 1 - 10 Robots To Clean 80% Of A Room
     """
     num_robot_range = range(1, 11)
     times1 = []
@@ -391,11 +402,12 @@ def showPlot1(title, x_label, y_label):
     pylab.xlabel(x_label)
     pylab.ylabel(y_label)
     pylab.show()
-
     
 def showPlot2(title, x_label, y_label):
     """
     What information does the plot produced by this function tell you?
+    
+    The Time It Takes Two Robots To Clean 80% Of Variously Sized Rooms
     """
     aspect_ratios = []
     times1 = []
@@ -413,22 +425,7 @@ def showPlot2(title, x_label, y_label):
     pylab.xlabel(x_label)
     pylab.ylabel(y_label)
     pylab.show()
-    
 
-# === Problem 6
-# NOTE: If you are running the simulation, you will have to close it 
-# before the plot will show up.
 
-#
-# 1) Write a function call to showPlot1 that generates an appropriately-labeled
-#     plot.
-#
-#       (... your call here ...)
-#
-
-#
-# 2) Write a function call to showPlot2 that generates an appropriately-labeled
-#     plot.
-#
-#       (... your call here ...)
-#
+#showPlot1("Time It Takes 1 - 10 Robots To Clean 80% Of A Room", "Num Robots", "Time")
+#showPlot2("Time It Takes Two Robots To Clean 80% Of Variously Sized Rooms", "Ratio Between Width and Height", "Time")    
