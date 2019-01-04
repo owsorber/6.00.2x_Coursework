@@ -3,7 +3,7 @@
 Problem 1: 10/10 points
 Problem 2: 10/10 points
 Problem 3: 10/10 points
-Problem 4:
+Problem 4: 10/10 points
 Problem 5:
 Problem 6:
 
@@ -25,7 +25,7 @@ import pylab
 # If you get a "Bad magic number" ImportError, you are not using Python 3.5 
 
 # For Python 3.6:
-from ps2_verify_movement36 import testRobotMovement
+#from ps2_verify_movement36 import testRobotMovement
 # If you get a "Bad magic number" ImportError, you are not using Python 3.6
 
 
@@ -262,6 +262,16 @@ class Robot(object):
         self.room.cleanTileAtPosition(self.pos)
         
         raise NotImplementedError # don't change this!
+        
+    def testRobotMovement(self, delay=0.1):
+        """
+        Runs a simulation of a single robot of type robot_type in a RectangularRoom.
+        """
+        anim = ps2_visualize.RobotVisualization(1, self.room.width, self.room.height, delay)
+        while self.room.getNumCleanedTiles() < self.room.getNumTiles():
+            self.updatePositionAndClean()
+            anim.update(self.room, [self])
+        anim.done()
 
 
 # === Problem 3
@@ -291,8 +301,8 @@ class StandardRobot(Robot):
             self.setRobotDirection(random.random() * 360)
 
 
-# Uncomment this line to see your implementation of StandardRobot in action!
-testRobotMovement(StandardRobot, RectangularRoom)
+#standardbot = StandardRobot(RectangularRoom(20, 20), 0.5)
+#standardbot.testRobotMovement()
 
 
 # === Problem 4
@@ -314,10 +324,27 @@ def runSimulation(num_robots, speed, width, height, min_coverage, num_trials,
     robot_type: class of robot to be instantiated (e.g. StandardRobot or
                 RandomWalkRobot)
     """
-    raise NotImplementedError
+    
+    
+    sumSteps = 0
+    for trial in range(0, num_trials):
+        robots = []
+        room = RectangularRoom(width, height)
+        for i in range(0, num_robots):
+            robots.append(robot_type(room, speed))
+        steps = 0
+        
+        while room.getNumCleanedTiles() / room.getNumTiles() < min_coverage:
+            for i in range(0, len(robots)):
+                robots[i].updatePositionAndClean()
+            steps += 1
+        sumSteps += steps
+        
+    return sumSteps / num_trials
+
 
 # Uncomment this line to see how much your simulation takes on average
-##print(runSimulation(1, 1.0, 10, 10, 0.75, 30, StandardRobot))
+#print(runSimulation(1, 1.0, 10, 10, 0.75, 30, StandardRobot))
 
 
 # === Problem 5
@@ -333,7 +360,17 @@ class RandomWalkRobot(Robot):
         Move the robot to a new position and mark the tile it is on as having
         been cleaned.
         """
-        raise NotImplementedError
+        
+        newPos = self.pos.getNewPosition(self.angle, self.speed)
+        
+        if self.room.isPositionInRoom(newPos):
+            self.setRobotPosition(newPos)
+            self.room.cleanTileAtPosition(self.pos)
+        
+        self.setRobotDirection(random.random() * 360)
+
+#randombot = RandomWalkRobot(RectangularRoom(20, 20), 0.5)
+#randombot.testRobotMovement()
 
 
 def showPlot1(title, x_label, y_label):
