@@ -4,7 +4,7 @@ Problem 1: 10/10 points
 Problem 2: 10/10 points
 Problem 3: 10/10 points
 Problem 4: 10/10 points
-Problem 5:
+Problem 5: 10/10 points
 Problem 6:
 
 @author: owsorber
