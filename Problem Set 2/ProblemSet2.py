@@ -1,5 +1,5 @@
 """
-6.00.2x Problem Set 1: Simulating Robots 
+6.00.2x Problem Set 2: Simulating Robots 
 Problem 1: 10/10 points
 Problem 2: 10/10 points
 Problem 3: 10/10 points
@@ -352,11 +352,14 @@ class RandomWalkRobot(Robot):
 def testRobotMovement(robot_types, room, speed, delay):
     """
     Runs a simulation of a single robot of type robot_type in a RectangularRoom.
+    
+    robot_types: a dict, mapping a robot class to the number of that kind of robot to be tested
     """
     
     robots = []
     for robot_type in robot_types:
-        robots.append(robot_type(room, speed))
+        for i in range(0, robot_types[robot_type]):
+            robots.append(robot_type(room, speed))
     
     anim = ps2_visualize.RobotVisualization(len(robots), room.width, room.height, delay)
     while room.getNumCleanedTiles() < room.getNumTiles():
@@ -437,12 +440,12 @@ def showPlot3(title, x_label, y_label):
 
 
 """ TESTING PLOTS """
-showPlot1("Time It Takes 1 - 10 Robots To Clean 80% Of A Room", "Num Robots", "Time")
-showPlot2("Time It Takes Two Robots To Clean 80% Of Variously Sized Rooms", "Ratio Between Width and Height", "Time")    
-showPlot3("Time It Takes Robots To Clean Different Percentages of a Room", "Percentage", "Time")
+#showPlot1("Time It Takes 1 - 10 Robots To Clean 80% Of A Room", "Num Robots", "Time")
+#showPlot2("Time It Takes Two Robots To Clean 80% Of Variously Sized Rooms", "Ratio Between Width and Height", "Time")    
+#showPlot3("Time It Takes Robots To Clean Different Percentages of a Room", "Percentage", "Time")
 
 """ TESTING ROBOT MOVEMENT """
-#testRobotMovement([StandardRobot, StandardRobot, StandardRobot, StandardRobot], RectangularRoom(10, 10), 0.2, 0.1)
+testRobotMovement({StandardRobot: 15, RandomWalkRobot: 5}, RectangularRoom(20, 20), 1, 0.1)
 
 
 
