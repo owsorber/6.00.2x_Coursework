@@ -3,7 +3,7 @@
 """
 This file simulates a game of Fair Roulette, a casino game in which players can bet that a ball
 will roll into a specific pocket or a specific colored pocket. Given the orientation of the
-Roulette wheel, the Fair Roulette determines whether a random ball is black or red. It also 
+Roulette wheel, the isBlack() function determines whether a random ball is black or red. It also 
 contains functions for betting for certain outcomes that return the amount gained or lost.
 Then, playRoulette() plays a game of FairRoulette for a certain number of spins and prints
 the results.
