@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-This file simulates a game of Fair Roulette, a casino game in which players can bet that a ball
-will roll into a specific pocket or a specific colored pocket. Given the orientation of the
-Roulette wheel, the isBlack() function determines whether a random ball is black or red. FairRoulette 
-also contains functions for betting for certain outcomes that return the amount gained or lost.
-Then, playRoulette() plays a game of FairRoulette for a certain number of spins and prints
-the results.
+This file simulates a game of Roulette, a casino game in which players can bet that a ball
+will roll into a specific pocket or a specific colored pocket. FairRoulette contains functions 
+for betting for certain outcomes that return the amount gained or lost. European Roulette is a
+subclass of FairRoulette with an extra pocket, "0", and American Roulette is a subclass of
+EuropeanRoulette with an extra pocket "00". Then, playRoulette() plays a game for a certain 
+number of spins and getPocketReturns() gets the returns of betting on a pocket for a game.
+Then, the sample mean with confidence intervals is printed out to show that playing in American 
+or European Roulette yields worse outcomes than Fair Roulette.
 Code inspired by Lecture 7 of MIT Course 6.00.2x
 
 Created on Fri Jan 4 15:01:11 2019
@@ -33,13 +35,16 @@ class FairRoulette:
     
     # Uses the configuration of a roulette wheel to determine black and red pockets
     def isBlack(self):
+        if type(self.ball) != int:
+            return False
+        
         if (self.ball > 0 and self.ball <= 10) or (self.ball > 18 and self.ball <= 28):
             return self.ball % 2 == 0 # if pocket is even and in these ranges, pocket is black
         else:
             return self.ball % 2 == 1 # if pocket is odd and not in these ranges, pocket is red
         
     def isRed(self):
-        return not self.isBlack()
+        return type(self.ball) == int and not self.isBlack()
     
     # Bet on a color or pocket.
     # If you win, you get the odds times your bet. If you lose, you lose the money you bet.
@@ -61,9 +66,9 @@ class FairRoulette:
         
     def __str__(self):
         return "Fair Roulette"
-        
 
-def playRoulette(game, numSpins):
+
+def playRoulette(game, numSpins, toPrint):
     luckyNumber = "2" # Pocket we're betting for the simulation
     
     bet = 1 # Money we're betting for the simulation
@@ -77,13 +82,67 @@ def playRoulette(game, numSpins):
         totalPocket += game.betPocket(luckyNumber, bet)
     
     # Print simulation values
-    print(numSpins, "spins of", game)
-    print("Average Return of betting red:", str(100*totalRed/numSpins), "%")
-    print("Average Return of betting black:", str(100*totalBlack/numSpins), "%")
-    print("Average Return of betting", luckyNumber, ":", str(100*totalPocket/numSpins), "%")
+    if toPrint:
+        print(numSpins, "spins of", game)
+        print("Average Return of betting red:", str(100*totalRed/numSpins), "%")
+        print("Average Return of betting black:", str(100*totalBlack/numSpins), "%")
+        print("Average Return of betting", luckyNumber, ":", str(100*totalPocket/numSpins), "%")
     
+    return (totalRed/numSpins, totalBlack/numSpins, totalPocket/numSpins)
     
-numSpins = 100000
-game = FairRoulette()
-playRoulette(game, numSpins)    
+   
+# Sub classes of Fair Roulette to represent European Roulette and American Roulette
+class EuropeanRoulette(FairRoulette):
+    def __init__(self):
+        FairRoulette.__init__(self)
+        self.pockets.append("0")
+    
+    def __str__(self):
+        return "European Roulette"  
+class AmericanRoulette(EuropeanRoulette):
+    def __init__(self):
+        EuropeanRoulette.__init__(self)
+        self.pockets.append("00")
+    
+    def __str__(self):
+        return "American Roulette"   
+
+def findPocketReturn(game, numTrials, trialSize):
+    pocketReturns = []
+    for trial in range(0, numTrials):
+        trialVals = playRoulette(game, trialSize, False)
+        pocketReturns.append(trialVals[2])
+    return pocketReturns
+
+
+def getMeanAndStd(sample):
+    mean = sum(sample) / float(len(sample))
+    tot = 0.0
+    for x in sample:
+        tot += (x - mean) ** 2
+    stdev = (tot/len(sample)) ** 0.5
+    return mean, stdev
+
+
+# Testing out a game of fair roulette
+#numSpins = 10
+#game = FairRoulette()
+#playRoulette(game, numSpins)    
+    
+numTrials = 20
+games = (FairRoulette, EuropeanRoulette, AmericanRoulette)
+resultDict = {}
+
+for game in games:
+    resultDict[game().__str__()] = [] # set each key game name to an empty list
+
+for numSpins in (100, 1000, 10000, 100000):
+    print("\nSimulate betting pocket for", numTrials, "trials of", numSpins, "spins each")
+    for game in games:
+        pocketReturns = findPocketReturn(game(), numTrials, numSpins)
+        mean, std = getMeanAndStd(pocketReturns)
+        resultDict[game().__str__()].append((numSpins, 100*mean, 100*std))
+        print("Expected return for", game(), "is", str(round(100*mean, 3)), "%", "+/-", str(round(100*1.96*std, 3)), "%", "with 95% confidence")
+        
+    
     
