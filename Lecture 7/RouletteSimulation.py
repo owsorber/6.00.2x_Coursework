@@ -78,9 +78,9 @@ def playRoulette(game, numSpins):
     
     # Print simulation values
     print(numSpins, "spins of", game)
-    print("Return of betting red:", str(100*totalRed/numSpins), "%")
-    print("Return of betting black:", str(100*totalBlack/numSpins), "%")
-    print("Return of betting", luckyNumber, ":", str(100*totalPocket/numSpins), "%")
+    print("Average Return of betting red:", str(100*totalRed/numSpins), "%")
+    print("Average Return of betting black:", str(100*totalBlack/numSpins), "%")
+    print("Average Return of betting", luckyNumber, ":", str(100*totalPocket/numSpins), "%")
     
     
 numSpins = 100000
