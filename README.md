@@ -11,3 +11,4 @@ Repositories that include lesson code, assignments/exercises, and lecture-specif
 * Lecture 3: Maze Solver
 * Lecture 4: Fibonacci Algorithm Runtime Plot
 * Lecture 6: Random Walk Evolution Simulator
+* Lecture 8: Monte-Carlo Integral Estimator
