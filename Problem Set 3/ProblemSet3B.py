@@ -2,7 +2,7 @@
 6.00.2x Problem Set 3 Part B: Simulating the Spread of Disease and Virus Population Dynamics
 
 Problem 1: 15/15 points
-Problem 2: incomplete
+Problem 2: 15/15 points
 Problem 3: incomplete
 Problem 4: incomplete
 Problem 5: incomplete
@@ -184,7 +184,7 @@ class Patient(object):
 def simulationWithoutDrug(numViruses, maxPop, maxBirthProb, clearProb,
                           numTrials):
     """
-    Run the simulation and plot the graph for problem 3 (no drugs are used,
+    Run the simulation and plot the graph for problem 2 (no drugs are used,
     viruses do not have any drug resistance).    
     For each of numTrials trial, instantiates a patient, runs a simulation
     for 300 timesteps, and plots the average virus population size as a
@@ -197,8 +197,33 @@ def simulationWithoutDrug(numViruses, maxPop, maxBirthProb, clearProb,
     numTrials: number of simulation runs to execute (an integer)
     """
 
-    # TODO
+    TIME_STEPS = 300
+    averages = [0.0] * TIME_STEPS # each element of list corresponds to a timestep
+    
+    for trial in range(numTrials):
+        #print("Trial " + str(trial + 1))
+        viruses = [SimpleVirus(maxBirthProb, clearProb)] * numViruses
+        patient = Patient(viruses, maxPop)
+        for timestep in range(TIME_STEPS):
+            averages[timestep] += patient.update()
+    
+    averages = [x / numTrials for x in averages]
+    #print(averages)
+    pylab.plot(averages, label = "SimpleVirus")
+    pylab.title("SimpleVirus simulation")
+    pylab.xlabel("Time Steps")
+    pylab.ylabel("Average Virus Population")
+    pylab.legend(loc = "best")
+    pylab.show()
 
+
+"""
+Part B Problem 2-2:
+A good question to consider as you look at your plot is: about how long does it 
+take before the population stops growing?
+    About 150 time-steps
+"""
+simulationWithoutDrug(100, 1000, 0.1, 0.05, 50)
 
 
 #
