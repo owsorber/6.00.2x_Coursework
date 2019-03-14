@@ -5,7 +5,7 @@ Problem 1: 15/15 points
 Problem 2: 15/15 points
 Problem 3: 10/10 points
 Problem 4: 10/10 points
-Problem 5: incomplete
+Problem 5: 10/10 points
 
 @author: owsorber
 """
@@ -489,4 +489,35 @@ def simulationWithDrug(numViruses, maxPop, maxBirthProb, clearProb, resistances,
     
     """
 
-    # TODO
+    TIME_STEPS = 300
+    DRUG = "guttagonol"
+    totalAverages = [0.0] * TIME_STEPS # each element is total population for a time step
+    resistanceAverages = [0.0] * TIME_STEPS # each element is resisting population for a time step
+    for trial in range(numTrials):
+        #print("Trial " + str(trial + 1))
+        viruses = [ResistantVirus(maxBirthProb, clearProb, resistances, mutProb)] * numViruses
+        patient = TreatedPatient(viruses, maxPop)
+        for timestep in range(TIME_STEPS // 2):
+            totalAverages[timestep] += patient.update()
+            resistanceAverages[timestep] += patient.getResistPop([DRUG])
+        patient.addPrescription(DRUG)
+        for timestep in range(TIME_STEPS // 2, TIME_STEPS):
+            totalAverages[timestep] += patient.update()
+            resistanceAverages[timestep] += patient.getResistPop([DRUG])
+    
+    totalAverages = [x / numTrials for x in totalAverages]
+    resistanceAverages = [x / numTrials for x in resistanceAverages]
+    pylab.plot(totalAverages, label = "Total Viruses")
+    pylab.plot(resistanceAverages, label = "Viruses Resistant to " + DRUG)
+    pylab.title("ResistantVirus Simulation")
+    pylab.xlabel("Time Steps")
+    pylab.ylabel("Average Virus Population")
+    pylab.legend(loc = "upper left")
+    pylab.show()
+
+simulationWithDrug(100, 1000, 0.1, 0.05, {"guttagonol": False}, 0.005, 50)
+
+
+
+
+
