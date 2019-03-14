@@ -3,8 +3,8 @@
 
 Problem 1: 15/15 points
 Problem 2: 15/15 points
-Problem 3: incomplete
-Problem 4: incomplete
+Problem 3: 10/10 points
+Problem 4: 10/10 points
 Problem 5: incomplete
 
 @author: owsorber
@@ -223,7 +223,7 @@ A good question to consider as you look at your plot is: about how long does it
 take before the population stops growing?
     About 150 time-steps
 """
-simulationWithoutDrug(100, 1000, 0.1, 0.05, 50)
+#simulationWithoutDrug(100, 1000, 0.1, 0.05, 50)
 
 
 #
@@ -252,20 +252,22 @@ class ResistantVirus(SimpleVirus):
         the probability of the offspring acquiring or losing resistance to a drug.
         """
 
-        # TODO
+        SimpleVirus.__init__(self, maxBirthProb, clearProb)
+        self.resistances = resistances
+        self.mutProb = mutProb
 
 
     def getResistances(self):
         """
         Returns the resistances for this virus.
         """
-        # TODO
+        return self.resistances
 
     def getMutProb(self):
         """
         Returns the mutation probability for this virus.
         """
-        # TODO
+        return self.mutProb
 
     def isResistantTo(self, drug):
         """
@@ -278,8 +280,9 @@ class ResistantVirus(SimpleVirus):
         returns: True if this virus instance is resistant to the drug, False
         otherwise.
         """
-        
-        # TODO
+        if drug not in self.resistances:
+            return False
+        return self.resistances[drug]
 
 
     def reproduce(self, popDensity, activeDrugs):
@@ -326,11 +329,28 @@ class ResistantVirus(SimpleVirus):
         maxBirthProb and clearProb values as this virus. Raises a
         NoChildException if this virus particle does not reproduce.
         """
+        
+        # Ensure virus is resistant to every drug in patient
+        for drug in activeDrugs:
+            if not self.isResistantTo(drug):
+                raise NoChildException
+        
+        reproductionProbability = self.maxBirthProb * (1 - popDensity)
+        if random.random() <= reproductionProbability:
+            childResistances = {}
+            for drug in self.resistances:
+                if random.random() <= self.mutProb: # mutate
+                    childResistances[drug] = not self.resistances[drug]
+                else: # don't mutate
+                    childResistances[drug] = self.resistances[drug]
+            return ResistantVirus(self.maxBirthProb, self.clearProb, childResistances, self.mutProb)
+        else:
+            raise NoChildException
+      
 
-        # TODO
-
-            
-
+#
+# PROBLEM 4
+#
 class TreatedPatient(Patient):
     """
     Representation of a patient. The patient is able to take drugs and his/her
@@ -349,7 +369,8 @@ class TreatedPatient(Patient):
         maxPop: The  maximum virus population for this patient (an integer)
         """
 
-        # TODO
+        Patient.__init__(self, viruses, maxPop)
+        self.prescriptions = []
 
 
     def addPrescription(self, newDrug):
@@ -362,8 +383,8 @@ class TreatedPatient(Patient):
 
         postcondition: The list of drugs being administered to a patient is updated
         """
-
-        # TODO
+        if newDrug not in self.prescriptions:
+            self.prescriptions.append(newDrug)
 
 
     def getPrescriptions(self):
@@ -374,7 +395,7 @@ class TreatedPatient(Patient):
         patient.
         """
 
-        # TODO
+        return self.prescriptions
 
 
     def getResistPop(self, drugResist):
@@ -388,9 +409,16 @@ class TreatedPatient(Patient):
         returns: The population of viruses (an integer) with resistances to all
         drugs in the drugResist list.
         """
-
-        # TODO
-
+        
+        # Assumes all viruses are resistant to start, takes away 1 for every non-resistant virus later
+        resistantViruses = len(self.viruses)
+        for virus in self.viruses:
+            for drug in drugResist:
+                if not virus.isResistantTo(drug):
+                    resistantViruses -= 1
+                    break
+        
+        return resistantViruses
 
     def update(self):
         """
@@ -413,12 +441,30 @@ class TreatedPatient(Patient):
         integer)
         """
 
-        # TODO
-
-
+        # Only preserve non-cleared viruses
+        livingViruses = []
+        for virus in self.getViruses():
+            if not virus.doesClear():
+                livingViruses.append(virus)
+        self.viruses = livingViruses
+        
+        # Recalculate current population density after viruses have been killed
+        currPopDensity = self.getTotalPop() / self.getMaxPop()
+        
+        # Account for virus reproduction among surviving viruses
+        virusOffspring = [] # list of all virus offspring produced in this time-step
+        for virus in self.viruses:
+            try:
+                reproductionAttempt = virus.reproduce(currPopDensity, self.prescriptions)
+                virusOffspring.append(reproductionAttempt)
+            except NoChildException:
+                continue
+        self.viruses += virusOffspring # add all offspring to virus list
+        
+        return self.getTotalPop()
 
 #
-# PROBLEM 4
+# PROBLEM 5
 #
 def simulationWithDrug(numViruses, maxPop, maxBirthProb, clearProb, resistances,
                        mutProb, numTrials):
