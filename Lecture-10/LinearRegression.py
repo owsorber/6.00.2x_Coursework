@@ -21,6 +21,8 @@ New pylab functions:
         - Takes in a polynomial model (tuple of coefficients) and list of measured x values
         - Returns a list of y values using polynomial model
 
+Code inspired by Lecture 10 of MIT Course 6.00.2x
+
 Created on Sun Mar 24 21:49:37 2019
 
 @author: owsorber
