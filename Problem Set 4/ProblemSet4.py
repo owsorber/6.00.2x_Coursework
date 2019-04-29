@@ -4,8 +4,8 @@
 Problem 1: 15/15 points
 Problem 2: 10/10 points
 Problem 3: 5/5 points
-Problem 4: 
-Problem 5: 
+Problem 4: 5/5 points
+Problem 5: 5/5 points
 
 @author: owsorber
 """
@@ -202,6 +202,7 @@ def evaluate_models_on_training(x, y, models):
 raw_data = Climate('data.csv')
 
 # Problem 3
+
 y = []
 x = INTERVAL_1
 for year in INTERVAL_1:
@@ -209,11 +210,25 @@ for year in INTERVAL_1:
 models = generate_models(x, y, [1])
 evaluate_models_on_training(x, y, models)
 
+pylab.clf()
 
 # Problem 4: FILL IN MISSING CODE TO GENERATE y VALUES
 x1 = INTERVAL_1
 x2 = INTERVAL_2
 y = []
-# MISSING LINES
+for year in INTERVAL_1:
+    y.append(np.mean(raw_data.get_yearly_temp('BOSTON', year)))
 models = generate_models(x, y, [1])    
 evaluate_models_on_training(x, y, models)
+
+
+# Problem 5: ANALYSIS
+"""
+Which graph, choosing a specific day (Jan 10) or calculating the yearly average, indicates that almost none of the data variation is learned by our model?
+    * Choosing a specific day
+
+Which graph, choosing a specific day (Jan 10) or calculating the yearly average, supports more the claim that global warming is leading to an increase in temperature?
+    * Choosing the yearly average
+"""
+
+
