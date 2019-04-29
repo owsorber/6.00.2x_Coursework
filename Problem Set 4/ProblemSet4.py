@@ -3,7 +3,7 @@
 
 Problem 1: 15/15 points
 Problem 2: 10/10 points
-Problem 3: 
+Problem 3: 5/5 points
 Problem 4: 
 Problem 5: 
 
@@ -11,6 +11,7 @@ Problem 5:
 """
 
 import numpy as np
+import pylab
 import re
 
 # cities in our weather data
@@ -185,7 +186,16 @@ def evaluate_models_on_training(x, y, models):
         None
     """
     
-    
+    m = 0
+    for model in models:
+        m += 1
+        pylab.figure("m" + str(m))
+        estimated_y = pylab.polyval(model, x)
+        pylab.title("Degree = " + str(len(model) - 1) + ",\nR^2 = " + str(r_squared(y, estimated_y)))
+        pylab.xlabel("Year")
+        pylab.ylabel("Temp")
+        pylab.plot(x, y, "bo")
+        pylab.plot(x, estimated_y, "r")
 
 
 ### Begining of program
